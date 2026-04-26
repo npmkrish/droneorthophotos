@@ -12,7 +12,7 @@ def remove_detection_boxes(image_path, output_path):
     # Read the image
     image = cv2.imread(image_path)
     
-    if image is None:
+    if image is None:                             #testing 3
         raise ValueError("Could not read the image")
     
     # Convert to RGB (OpenCV uses BGR by default)
