@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Predict</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        body {
+            background-color: rgba(240, 240, 240, 0.806);
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 3%;
+        }
+
+        .logo span {
+            color: black;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-badge {
+            position: relative;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+        }
+
+        .notification-badge .fas {
+            font-size: 1rem;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .flag {
+            width: 1.5rem;
+            height: 1rem;
+            object-fit: cover;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .profile-img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 16rem;
+            background-color: white;
+            height: calc(100vh - 4rem);
+            padding: 1rem;
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            color: var(--gray-700);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .menu-button i {
+            font-size: 1.2rem;
+        }
+
+        .menu-button:hover {
+            background-color: var(--gray-100);
+        }
+
+        .menu-button.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .menu-button.active i {
+            color: white;
+        }
+
+        .bottom-menu {
+            margin-top: auto;
+            margin-bottom: 2rem;
+        }
+
+        .bottom-menu .menu-button:last-child {
+            font-weight: bold;
+        }
+
+        .bottom-menu .menu-button:last-child i {
+            color: rgb(255, 27, 27);
+        }
+
+        .bottom-menu .menu-button:last-child {
+            color: rgb(255, 27, 27);
+            border: none;
+        }
+
+        /* New styles for main content */
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            height: calc(100vh - 4rem);
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .image-containers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            height: calc(100% - 5rem);
+            gap: 2rem;
+           
+        }
+
+        .image-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            max-width: 45%;
+        }
+
+        .image-container h2 {
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .image-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-50);
+            border-radius: 0.5rem;
+        }
+        .loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.5s linear infinite;
+    margin: 20px auto; /* Center it */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#prediction-container {
+    text-align: center; /* Center content */
+    padding: 20px;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Previous navbar code remains the same -->
+    <nav class="navbar">
+        <div class="logo">Fusion<span>AI</span></div>
+        <div class="nav-right">
+            <div class="notification-badge">
+                <i class="fa-solid fa-bell" style="color: #145bff;"></i>
+            </div>
+            <div class="language-selector">
+                <img src="{{ url_for('static', filename='images/flag.png') }}" alt="Fusion AI Logo" class="flag">
+                <img src="flag.png" alt="India flag" class="flag">
+                <span>English</span>
+            </div>
+            <div class="profile">
+                <img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="Profile" class="profile-img">
+                <h5>NARENDRA MODI</h5>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Previous sidebar code remains the same -->
+        <aside class="sidebar">
+            <button class="menu-button" onclick="location.href='dashboard'">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </button>
+            <button class="menu-button active" onclick="location.href='predict'">
+                <i class="fas fa-upload"></i>
+                Upload
+            </button>
+            <button class="menu-button" onclick="location.href='uploaded_images'">
+                <i class="fas fa-images"></i>
+                Uploaded Images
+            </button>
+            <button class="menu-button" onclick="location.href='predicted_images'">
+                <i class="fas fa-image"></i>
+                Predicted Images
+            </button>
+            <button class="menu-button" onclick="location.href='route'">
+                <i class="fas fa-chart-bar"></i>
+                Reports & Analytics
+            </button>
+            <button class="menu-button " onclick="location.href='map'">
+                <i class="fas fa-map-marked-alt"></i>
+                Find in Map
+            </button>
+
+            <div class="bottom-menu">
+                <button class="menu-button">
+                    <i class="fas fa-cog fa-spin"></i> Settings
+                </button>
+                <button class="menu-button">
+                    <i class="fas fa-sign-out-alt fa-flip"></i> Log out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <button class="back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            
+            <div>
+                <div class="image-container">
+                    <h2>Uploaded Image</h2>
+                    <div class="image-content">
+                        <!-- Image content will go here -->
+                        
+                        {% if image %}
+                        <div >
+                            <img src="{{ url_for('uploaded_file', filename=image1) }}" alt="Latest Predicted Image">
+                        </div>
+                    {% else %}
+                        <p>No predictions available yet.</p>
+                    {% endif %}
+                       
+                </div>
+
+                <!-- Show Image Button -->
+<button class="upload-btn" id="show-predicted-image">Show Predicted Image</button>
+                
+                <div class="image-container">
+                    <h2>Predicted Image</h2>
+                    <div class="image-content">
+
+<!-- Container where the predicted image will be displayed -->
+<div id="prediction-container" style="width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc; background-color: #f9f9f9;">
+    <!-- Initially, only the buffer (spinner) will be inside -->
+</div>
+                    
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+   
+
+
+
+
+<style>
+    /* Spinner animation */
+    .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    document.getElementById('show-predicted-image').addEventListener('click', async function() {
+    const predictionContainer = document.getElementById('prediction-container');
+
+    // Show loading animation
+    predictionContainer.innerHTML = `<div class="loader"></div>`;
+
+    try {
+        const response = await fetch('/predict_image');
+        const data = await response.json();
+
+        if (data.image_url) {
+            const predictedImage = new Image();
+            predictedImage.src = `${data.image_url}?t=${Date.now()}`; // Prevent caching
+            predictedImage.alt = "Predicted Image";
+            predictedImage.style.maxWidth = "100%";
+            predictedImage.style.height = "auto";
+            predictedImage.style.display = "none"; // Hide initially
+
+            predictedImage.onload = () => {
+                predictionContainer.innerHTML = ''; // Clear loader
+                predictionContainer.appendChild(predictedImage);
+                predictedImage.style.display = "block"; // Show image
+            };
+        }  else {
+            predictionContainer.innerHTML = '<p>No predictions found.</p>';
+        }
+    } catch (error) {
+        console.error("Error fetching predicted image:", error);
+        predictionContainer.innerHTML = '<p>Error loading image.</p>';
+    }
+});
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        body {
+            background-color: rgba(240, 240, 240, 0.806);
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 3%;
+            
+        }
+        .logo span{
+          color: black;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-badge {
+            position: relative;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+        }
+
+        .notification-badge .fas {
+            font-size: 1rem;
+            
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .flag {
+            width: 1.5rem;
+            height: 1rem;
+            object-fit: cover;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .profile-img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 16rem;
+            background-color: white;
+            height: calc(100vh - 4rem);
+            padding: 1rem;
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            color: var(--gray-700);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .menu-button i {
+            font-size: 1.2rem;
+        }
+
+        .menu-button:hover {
+            background-color: var(--gray-100);
+        }
+
+        .menu-button.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .menu-button.active i {
+            color: white;
+        }
+
+        .bottom-menu {
+            margin-top: auto;
+            margin-bottom: rem;
+        }
+        /* Style for the "Log out" button */
+      .bottom-menu .menu-button:last-child {
+        font-weight: bold; /* Make the button text bold */
+      }
+
+      .bottom-menu .menu-button:last-child i {
+        color: rgb(255, 27, 27); /* Red color for the icon */
+      }
+
+      .bottom-menu .menu-button:last-child {
+        color: rgb(255, 27, 27); /* Red color for the text */
+        border: none; /* Remove any border for cleaner styling */
+      }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            height: 100%;
+        }
+        .main-content {
+            margin-left: px; /* Adjusted for sidebar */
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height:fit-content;
+        }
+
+.panels {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.left-panel{
+  width: 40%; /* Equal width for both panels */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.right-panel {
+  width: 60%; /* Equal width for both panels */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detection-results {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.result-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.download-report {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.download-report:hover {
+  background-color: #2980b9;
+}
+
+.success-indicator {
+  display: flex;
+  align-items: center;
+  color: #2ecc71;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.success-indicator i {
+  margin-right: 8px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.result-label {
+  font-weight: 600;
+  color: #7f8c8d;
+}
+
+.result-value {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.detected-objects {
+  margin-top: 16px;
+}
+
+.detected-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.object-name {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.object-confidence {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
+  margin-top: 24px;
+}
+
+.summary-item {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #7f8c8d;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.charts-container {
+  display: flex;
+  flex-direction: column; /* Aligns the charts vertically */
+  align-items: center; /* Centers the charts horizontally */
+  gap: 30px; /* Adds spacing between charts */
+}
+
+.pie-chart-container,
+.bar-chart-container {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(66, 65, 65, 0.1);
+  width: 100%;
+  max-width: 400px; /* Increases the maximum width for larger charts */
+  height: 250px; /* Increases the height for better visibility */
+  padding-bottom: 20px; /* Adjusts padding to balance content spacing */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pie-chart-container,
+  .bar-chart-container {
+    max-width: 90%; /* Adjusts the chart size for smaller screens */
+    height: 300px; /* Reduces height to fit mobile view */
+  }
+}
+
+
+canvas {
+  width: 100% !important; /* Stretch canvas to container width */
+  height: 100% !important; /* Stretch canvas to container height */
+}
+
+        
+
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Fusion<span>AI</span></div>
+        <div class="nav-right">
+            <div class="notification-badge">
+              <i class="fa-solid fa-bell" style="color: #145bff;"></i>
+            </div>
+            <div class="language-selector">
+                <img src="{{ url_for('static', filename='images/flag.png') }}" alt="Fusion AI Logo" 
+                class="flag">
+                
+                <span>English</span>
+            </div>
+            <div class="profile">
+                <img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="Profile" 
+                class="profile-img">
+                
+                <h4>Hi <span style="color:red; font-size:16px"> {{ user_name }} </span>!</h4>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+          <button class="menu-button" onclick="location.href='dashboard'">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+          </button>
+          <button class="menu-button" onclick="location.href='predict'">
+            <i class="fas fa-upload"></i>
+            Upload
+          </button>
+          <button class="menu-button" onclick="location.href='uploaded_images'">
+            <i class="fas fa-images"></i>
+            Uploaded Images
+          </button>
+          <button class="menu-button" onclick="location.href='predicted_images'">
+            <i class="fas fa-image"></i>
+            Predicted Images
+          </button>
+  
+          <button class="menu-button active" onclick="location.href='route'">
+            <i class="fas fa-chart-bar"></i>
+            Reports & Analytics
+          </button>
+            
+          <button class="menu-button" onclick="location.href='map'">
+            <i class="fas fa-map-marked-alt"></i>
+            Find in Map
+          </button>
+          
+
+            <div class="bottom-menu">
+                <button class="menu-button">
+                    <i class="fas fa-cog fa-spin"></i> Settings
+                </button>
+                <button class="menu-button">
+                    <i class="fas fa-sign-out-alt fa-flip"></i> Log out
+                </button>
+            </div>
+        </aside>
+
+
+        <main class="main" style=" font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
+      ">
+            <div class="container" style=" text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: 150px;
+            max-width: 400px;"
+          >
+                <h1 style=" font-size: 24px;
+                margin-bottom: 20px;
+                color: #333;">Feature Extraction & Analysis</h1>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="file" accept="image/*" required style=" width: 100%;
+                    padding: 10px;
+                    font-size: 16px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    margin-bottom: 20px;">
+                    <button type="submit" style="background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    width: 100%;">Analyze Image</button>
+                </form>
+            </div>            
+        </main>
+    </div>
+    
+  
+     
+      
+  </div>
+     
+      
+  </div>
+
+  
+  
+
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

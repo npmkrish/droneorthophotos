@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4faff;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+        <div class="result">
+            <p><strong>Objects Detected:</strong></p>
+            {% for label, count in object_counts.items() %}
+                <p>{{ label }}: {{ count }} detected</p>
+            {% endfor %}
+        </div>
+        <div class="button-container">
+            <button type="button" onclick="generateReport()">Download PDF Report</button>
+        </div>
+        
+    </div>
+
+    <script>
+        const objectCounts = JSON.parse(`{{ object_counts | tojson | safe }}`);
+    
+        function generateReport() {
+            fetch('/report_nlp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Correct Content-Type
+                },
+                body: JSON.stringify({ object_counts: objectCounts }), // Send object_counts as JSON
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.blob(); // Fetch the PDF blob
+                } else {
+                    console.log(response)
+                    return response.text().then(text => {
+                        throw new Error(`Server Error: ${text}`);
+                    });
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'analysis_report.pdf'; // PDF filename
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url); // Clean up
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(`Error: ${error.message}`);
+            });
+        }
+    </script>
+    
+    
+    
+</body>
+</html>

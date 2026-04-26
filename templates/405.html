@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Predict</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            margin-top: 2%;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a1a;
+            border: 1px solid var(--gray-200);
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 10%;
+            text-align: center;
+            background: #fafafa;
+        }
+        
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
+
+        .choose-files-btn {
+            background: #1a1a1a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .file-limit {
+            color: #666;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-btn:hover {
+            background-color: #174ab4;
+        }
+
+        .google-upload-btn {
+        background: #4285F4; /* Google's blue color */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-top: 10px;
+        text-align: center;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+       .google-upload-btn:hover {
+       background: #357ae8; /* Darker blue on hover */
+       transform: translateY(-2px);
+       }
+
+       .google-upload-btn i {
+       margin-right: 8px;
+       font-size: 16px;
+       }
+
+
+        body {
+            background-color: rgba(240, 240, 240, 0.806);
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 3%;
+        }
+
+        .logo span {
+            color: black;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-badge {
+            position: relative;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+        }
+
+        .notification-badge .fas {
+            font-size: 1rem;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .flag {
+            width: 1.5rem;
+            height: 1rem;
+            object-fit: cover;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: small;
+        }
+
+        .profile-img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 16rem;
+            background-color: white;
+            height: calc(100vh - 4rem);
+            padding: 1rem;
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            color: var(--gray-700);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .menu-button i {
+            font-size: 1.2rem;
+        }
+
+        .menu-button:hover {
+            background-color: var(--gray-100);
+        }
+
+        .menu-button.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .menu-button.active i {
+            color: white;
+        }
+
+        .bottom-menu {
+            margin-top: auto;
+            margin-bottom: 2rem;
+        }
+        /* Style for the "Log out" button */
+      .bottom-menu .menu-button:last-child {
+        font-weight: bold; /* Make the button text bold */
+      }
+
+      .bottom-menu .menu-button:last-child i {
+        color: rgb(255, 27, 27); /* Red color for the icon */
+      }
+
+      .bottom-menu .menu-button:last-child {
+        color: rgb(255, 27, 27); /* Red color for the text */
+        border: none; /* Remove any border for cleaner styling */
+      }
+
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            margin-top: 2%;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a1a;
+            border: 1px solid var(--gray-200);
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 10%;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+        }
+
+        .choose-files-btn {
+            background: #1a1a1a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .file-limit {
+            color: #666;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-btn:hover {
+            background-color: #174ab4;
+        }
+
+        /* Preview section */
+        .preview {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .preview-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .file-name {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 5px;
+            color: var(--gray-700);
+            word-wrap: break-word;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar">
+       
+        <div class="logo">Fusion<span>AI</span></div>
+        <div class="nav-right">
+            <div class="notification-badge">
+              <i class="fa-solid fa-bell" style="color: #145bff;"></i>
+            </div>
+            <div class="language-selector">
+                <img src="{{ url_for('static', filename='images/flag.png') }}" alt="Fusion AI Logo" 
+                class="flag">
+                
+                <span>English</span>
+            </div>
+            <div class="profile">
+                <img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="Profile" 
+                class="profile-img">
+                
+                <h4>Hi <span style="color:red; font-size:16px"> {{ user_name }} </span>!</h4>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <button class="menu-button" onclick="location.href='dashboard'">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+              </button>
+              <button class="menu-button active" onclick="location.href='predict'">
+                <i class="fas fa-upload"></i>
+                Upload
+              </button>
+              <button class="menu-button" onclick="location.href='uploaded_images'">
+                <i class="fas fa-images"></i>
+                Uploaded Images
+              </button>
+              <button class="menu-button" onclick="location.href='predicted_images'">
+                <i class="fas fa-image"></i>
+                Predicted Images
+              </button>
+      
+              <button class="menu-button" onclick="location.href='route'">
+                <i class="fas fa-chart-bar"></i>
+                Reports & Analytics
+              </button>
+              
+              <button class="menu-button" onclick="location.href='map'">
+                  <i class="fas fa-map-marked-alt"></i>
+                  Find in Map
+              </button>
+        
+
+            <div class="bottom-menu">
+                <button class="menu-button">
+                    <i class="fas fa-cog fa-spin"></i> Settings
+                </button>
+                <button class="menu-button">
+                    <i class="fas fa-sign-out-alt fa-flip"></i> Log out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <h2>Upload an Image for Prediction</h2>
+                
+                <!-- Upload Area -->
+                <div class="upload-area">
+
+                    <label for="file-upload" class="choose-files-btn">Choose Image</label>
+                    <input id="file-upload" type="file" name="file" >
+
+                    <a href="https://www.google.co.in/">
+                        <button class="google-upload-btn">
+                            <i class="fab fa-google"></i> Upload from Google
+                        </button>
+                    </a>
+
+                   
+                    
+                </div>
+        
+                <!-- Optional Latitude and Longitude Inputs -->
+                <div class="location-inputs" style="margin-top: 20px;">
+                    <label for="latitude">Latitude :</label>
+                    <input id="latitude" type="text" name="latitude" placeholder="Enter Latitude" style="margin-bottom: 10px; width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                    
+                    <label for="longitude">Longitude:</label>
+                    <input id="longitude" type="text" name="longitude" placeholder="Enter Longitude" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+                
+                <button class="upload-btn" id="upload-btn">Upload</button>
+                
+                <p id="upload-message" style="display: none; color: green; font-weight: bold;"></p>
+
+
+
+                
+                <!-- Preview and Prediction Section -->
+                <div id="result-section" style="margin-top: 20px; display: none;">
+                    <h3>Predicted Image:</h3>
+                    <img id="predicted-image" src="" alt="Predicted Image" style="max-width: 100%; border: 1px solid #ccc; border-radius: 8px;">
+                    
+                    <div id="location-display" style="margin-top: 10px;">
+                        <p id="latitude-display"></p>
+                        <p id="longitude-display"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-upload');
+        const latitudeInput = document.getElementById('latitude');
+        const longitudeInput = document.getElementById('longitude');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadMessage = document.getElementById('upload-message');
+    
+        uploadBtn.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            const latitude = latitudeInput.value;
+            const longitude = longitudeInput.value;
+    
+            if (!file) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            if (!latitude || !longitude) {
+                alert('Please provide both latitude and longitude.');
+                return;
+            }
+    
+            uploadMessage.innerText = 'Uploading.......Please wait';
+            uploadBtn.disabled = true; // Disable button during upload
+    
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('latitude', latitude);
+            formData.append('longitude', longitude);
+            formData.append('timestamp', Date.now());
+    
+            fetch('/predict', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                uploadBtn.disabled = false; // Re-enable button
+    
+                if (data.error) {
+                    alert(data.error);
+                    uploadMessage.innerText = ''; // Remove loading message
+                    return;
+                }
+    
+                // ✅ Redirect if redirect_url is available
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert("No redirect URL received from the server.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message || "An error occurred");
+                uploadBtn.disabled = false; // Re-enable button
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fusion AI</title>
+    <link rel="stylesheet" href="landing.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+
+      header {
+        background-color: #fff;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav a {
+        color: #333;
+        text-decoration: none;
+        margin-right: 1rem;
+      }
+
+      nav a.get-started {
+        background-color: #4285f4;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+
+      .hero {
+        display: flex;
+        align-items: center;
+        padding: 3rem;
+        background-color: #f0f3f4;
+      }
+
+      .hero-content {
+        flex: 1;
+        padding-right: 2rem;
+      }
+
+      .hero-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .hero-image img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .image-caption {
+        margin-top: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .supported-by {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .circular-profile {
+        margin-right: 0.5rem;
+        width: 50px;
+        height: 50px;
+      }
+
+      .supported-by-btn {
+        background-color: #155a8a;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .supported-by-btn:hover {
+        background-color: #124d6f;
+      }
+
+      .supported-by-btn .inner-link {
+        color: #fff;
+        text-decoration: underline;
+        margin-left: 5px;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-content h1 .orange-text {
+        color: #ff8c00;
+      }
+
+      .hero-content h1 .blue-text {
+        color: #4285f4;
+      }
+
+      .hero-content h1 .green-text {
+        color: #34a853;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: rgb(81, 77, 77);
+        font-weight: bold;
+      }
+
+      .cta-buttons {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .cta {
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        background-color: #002d8f;
+        color: #fff;
+        margin-right: 1rem;
+        transition: background-color 0.3s;
+      }
+
+      .cta:hover {
+        background-color: #001e5e;
+      }
+
+      .demo,
+      .tour {
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        color: #4285f4;
+        background-color: #fff;
+        border: 1px solid #4285f4;
+        margin-right: 1rem;
+        transition: background-color 0.3s;
+      }
+
+      .demo:hover,
+      .tour:hover {
+        background-color: #e0e1e1;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+
+        color: var(--primary-blue);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .sky-blue {
+        color: #0a71ef;
+      }
+
+      .black {
+        color: #000;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: #333;
+        text-decoration: none;
+        margin-right: 1.5rem;
+      }
+
+      .nav-links .get-started {
+        background-color: #4285f4;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#" class="logo">
+          <img
+            src="{{ url_for('static', filename='images/logo.webp') }}"
+            alt="Fusion AI Logo"
+            style="width: 40px; height: 40px; margin-right: 15px"
+          />
+
+          <span class="sky-blue">Fusion</span>
+          <span class="black">AI</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#">Features</a>
+          <a href="#">Benefits</a>
+          <a href="#">Technology</a>
+          <a href="/login" class="get-started">Get Started</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="supported-by">
+            <img
+              src="{{ url_for('static', filename='images/circularIMG.png') }}"
+              alt="Circular Profile"
+              class="circular-profile"
+            />
+            <a class="supported-by-btn" href="https://svamitva.nic.in/">
+              Digital India Initiative for
+              <span class="inner-link">SVAMITVA Scheme</span>
+            </a>
+          </div>
+          <h1>
+            <span class="orange-text">Transform Aerial Data</span><br />
+            <span class="blue-text">Into Actionable</span><br />
+            <span class="green-text">Intelligence</span>
+          </h1>
+          <p>
+            Harness the power of AI to convert drone imagery into precise<br />mapping
+            solutions. Faster analysis, better decisions, superior results.
+          </p>
+          <div class="cta-buttons">
+            <button class="cta" onclick="location.href='dashboard'">
+                Start Mapping Now
+            </button>
+            <button class="demo" onclick="location.href='video'">
+                Virtual Tour
+            </button>
+            <button class="tour" onclick="location.href='/download/previs'">
+              Previs
+          </button>
+          
+        </div>
+        
+        
+        </div>
+        <div class="hero-image">
+          <img
+            src="{{ url_for('static', filename='images/admin.jpg') }}"
+            alt="Prime Minister"
+            style="width: 80%; height: 80%"
+          />
+          <p class="image-caption">
+            "Our young innovators are proving every day that India has the
+            talent to lead the AI revolution. This project has the potential to
+            improve countless lives by making better use of the resources we
+            have."
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
