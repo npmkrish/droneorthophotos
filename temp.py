@@ -75,3 +75,5 @@ for result in results:
     plt.show()
 
 print(f"Final image saved to {output_image_path}")
+
+#print(f"Final image saved to {output_image_path}") 
