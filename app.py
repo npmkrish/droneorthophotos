@@ -13,7 +13,7 @@ import piexif
 import cv2
 import numpy as np
 
-
+#////////////////
 app = Flask(__name__)
 app.secret_key = 'deepanshu1234'
 
