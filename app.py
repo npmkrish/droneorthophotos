@@ -30,6 +30,8 @@ os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 # Disable decompression bomb error for large images
 Image.MAX_IMAGE_PIXELS = None
+Image.warnings.simplefilter('ignore', Image.DecompressionBombWarning)
+#ll
 
 # MongoDB connection
 client = MongoClient("mongodb+srv://mukulpersonal2003:WAWL0bC3hZi8KvSG@cluster0.s79lu.mongodb.net/")
