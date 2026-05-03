@@ -67,3 +67,4 @@ if __name__ == "__main__":
         print(f"Successfully cleaned image and saved to {output_path}")
     except Exception as e:
         print(f"Error processing image: {str(e)}")
+        print("Please check the input image path and ensure the image exists.")
