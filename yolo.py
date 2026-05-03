@@ -7,3 +7,6 @@ results = model.predict(source='skin cancer.v1i.yolov8/valid/images/ISIC_0034214
 print(results)
 
 model.show(results)
+print(results[0].boxes.xyxy)  # print bounding box coordinates (xyxy format)
+print(results[0].boxes.conf)   # print confidence scores
+print(results[0].boxes.cls)    # print class labels
