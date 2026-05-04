@@ -37,6 +37,7 @@ Image.warnings.simplefilter('ignore', Image.DecompressionBombWarning)
 client = MongoClient("mongodb+srv://mukulpersonal2003:WAWL0bC3hZi8KvSG@cluster0.s79lu.mongodb.net/")
 db = client['DeepanshuPro']
 users_collection = db['users']
+upload_files_collection = db['uploads']
 
 # YOLO models
 model = YOLO('best4.pt')
