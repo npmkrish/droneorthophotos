@@ -11,6 +11,7 @@ if directories:
     # Get the last directory
     last_directory = directories[-1]
     last_directory_path = os.path.join(folder_path, last_directory)
+    last_directory_path = os.path.normpath(last_directory_path)  # Normalize the path
 
     # List all file paths in the last directory
     file_paths = [os.path.join(last_directory_path, file) for file in os.listdir(last_directory_path) if os.path.isfile(os.path.join(last_directory_path, file))]
