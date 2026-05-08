@@ -673,6 +673,8 @@ def scanning():
         reverse=True
     )
     latest1_image = uploaded_file[0] if uploaded_file else None
+    latest_image_url = f"/static/predictions/{latest_image}" if latest_image else None
+    latest1_image_url = f"/static/uploads/{latest1_image}" if latest1_image else None
 
 
     
