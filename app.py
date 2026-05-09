@@ -683,6 +683,7 @@ def scanning():
     
 
     return render_template('scanning.html', image=latest_image, image1=latest1_image)
+    return render_template('scanning.html')
 
 
 
