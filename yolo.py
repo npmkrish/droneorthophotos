@@ -11,3 +11,4 @@ print(results[0].boxes.xyxy)  # print bounding box coordinates (xyxy format)
 print(results[0].boxes.conf)   # print confidence scores
 print(results[0].boxes.cls)    # print class labels
 print(results[0].boxes)        # print all box attributes
+print(results[0].masks)       # print segmentation masks (if available)
