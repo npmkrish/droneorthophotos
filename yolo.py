@@ -17,3 +17,4 @@ print(results[0].keypoints)   # print keypoints (if available)
 print(results[0].names)      # print class names (if available)
 print(results[0].orig_img)   # print original image (as a NumPy array)
 print(results[0].plot())     # print annotated image (as a NumPy array)
+print(results[0].save())     # save annotated image to disk and print the file path
