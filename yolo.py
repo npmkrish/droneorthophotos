@@ -13,3 +13,4 @@ print(results[0].boxes.cls)    # print class labels
 print(results[0].boxes)        # print all box attributes
 print(results[0].masks)       # print segmentation masks (if available)
 print(results[0].probs)       # print class probabilities (if available)
+print(results[0].keypoints)   # print keypoints (if available)
