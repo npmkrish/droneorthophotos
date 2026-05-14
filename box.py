@@ -69,3 +69,12 @@ if __name__ == "__main__":
         print(f"Error processing image: {str(e)}")
         print("Please check the input image path and ensure the image exists.")
 if __name__ == "__main__":
+    input_path = "predicted_image.jpg"  # Replace with your input image path
+    output_path = "cleaned_image.jpg"   # Replace with desired output path
+    
+    try:
+        cleaned_img = remove_detection_boxes(input_path, output_path)
+        print(f"Successfully cleaned image and saved to {output_path}")
+    except Exception as e:
+        print(f"Error processing image: {str(e)}")
+        print("Please check the input image path and ensure the image exists.")
