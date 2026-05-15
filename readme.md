@@ -1,5 +1,5 @@
  Drone Orthophoto Generation System
- Description
+ Description of model
 
 The Drone Orthophoto Generation System is a project developed for Smart India Hackathon (SIH) 2024 that aims to convert raw drone images into high-resolution, geometrically corrected orthophotos.
 
