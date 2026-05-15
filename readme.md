@@ -43,4 +43,4 @@ Tools: GIS software, Drone imaging tools
 Real-time drone data processing
 AI-based object detection (vehicles, crops, etc.)
 Cloud deployment for large-scale processing
-3D terrain mapping and analysis
+3D terrain mapping and analysis.
