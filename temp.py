@@ -73,6 +73,7 @@ for result in results:
     plt.imshow(cv2.cvtColor(blended_image, cv2.COLOR_BGR2RGB))
     plt.axis('off')
     plt.show()
+    plt.close()
 
 print(f"Final image saved to {output_image_path}")
 print("Processing complete.")
