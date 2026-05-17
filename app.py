@@ -692,6 +692,13 @@ def method_not_allowed(e):
         return render_template('405.html', user_name=user_name)
     # return render_template('405.html'), 405
     return redirect(url_for('405.html',user_name="alex bae"))
+def method_not_allowed(e):
+    if 'email' in session:
+        user_name = session['name']
+        print(user_name)
+        return render_template('405.html', user_name=user_name)
+    # return render_template('405.html'), 405
+    return redirect(url_for('405.html',user_name="MICHAEL JACKSON"))
 
 
 
