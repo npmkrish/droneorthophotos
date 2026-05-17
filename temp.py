@@ -74,6 +74,7 @@ for result in results:
     plt.axis('off')
     plt.show()
     plt.close()
+    plt.savefig(output_image_path)  # Save the displayed image as well
 
 print(f"Final image saved to {output_image_path}")
 print("Processing complete.")
