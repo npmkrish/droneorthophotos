@@ -5,6 +5,7 @@ folder_path = r"runs/detect"
 
 # List directories in the 'runs/detect' folder
 directories = [folder for folder in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, folder))]
+directories.sort()  # Sort directories to get the latest one easily
 
 # Check if there are any directories and get the last one.
 if directories:
@@ -22,3 +23,4 @@ if directories:
         print(file_path)
 else:
     print("No directories found.")
+    
