@@ -713,7 +713,9 @@ def not_found(e):
         return render_template('404.html', user_name=user_name)
     # return render_template('404.html'), 404
     return redirect(url_for('404.html',user_name="irowhskkgjs"))
-        
+def method_not_allowed(e):
+    render_template('405.html'), 405        
+
 
 
 
