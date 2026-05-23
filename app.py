@@ -677,7 +677,7 @@ def scanning():
     latest1_image_url = f"/static/uploads/{latest1_image}" if latest1_image else None
     latest_image = latest_image_url if latest_image else None
     latest1_image = latest1_image_url if latest1_image else None
-
+    latest_image = latest_image if latest_image else None
 
     
     
