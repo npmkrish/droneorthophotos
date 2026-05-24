@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import os
+import glob
 
 def remove_detection_boxes(image_path, output_path):
     """
