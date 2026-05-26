@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import glob
+import tensorflow as tf
 
 def remove_detection_boxes(image_path, output_path):
     """
