@@ -17,6 +17,8 @@ def remove_detection_boxes(image_path, output_path):
     
     if image is None:                             #testing 3
         raise ValueError("Could not read the image")
+    elif image.shape[2] != 3:
+        raise ValueError("Image does not have 3 channels (BGR)")
     
     # Convert to RGB (OpenCV uses BGR by default)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
