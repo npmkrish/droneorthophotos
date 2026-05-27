@@ -29,7 +29,8 @@ def remove_detection_boxes(image_path, output_path):
     upper_white = np.array([255, 255, 255])
     white_mask = cv2.inRange(image_rgb, lower_white, upper_white)
     middle_white_mask = cv2.inRange(image_rgb, middle_white, upper_middle_white)
-    
+    lower_gray = np.array([100, 100, 100])
+
     
     # Create masks for common box colors (adjust as needed)
     # Blue boxes
