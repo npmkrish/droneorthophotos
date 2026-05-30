@@ -41,6 +41,7 @@ def remove_detection_boxes(image_path, output_path):
     lower_blue = np.array([0, 0, 100])
     upper_blue = np.array([100, 100, 255])
     blue_mask = cv2.inRange(image_rgb, lower_blue, upper_blue)
+    green_mask = cv2.inRange(image_rgb, lower_green, upper_green)
     
     # Red boxes
     lower_red = np.array([100, 0, 0])
