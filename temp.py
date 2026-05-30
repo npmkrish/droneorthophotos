@@ -75,6 +75,7 @@ for result in results:
     plt.show()
     plt.close()
     plt.savefig(output_image_path)  # Save the displayed image as well
+    plt.close()
 
 print(f"Final image saved to {output_image_path}")
 print("Processing complete.")
