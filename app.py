@@ -680,6 +680,9 @@ def scanning():
     latest_image = latest_image if latest_image else None
     global latest1_image
     if latest_image and latest1_image:
+        if 'email' in session:
+            user_name = session['name']
+            print(user_name)
         
 
     
