@@ -19,3 +19,6 @@ export default defineConfig([
     },
   },
 ])
+
+export const ignorePatterns = ['dist']
+export const rules = {
