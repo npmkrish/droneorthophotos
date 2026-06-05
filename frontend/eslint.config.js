@@ -20,9 +20,3 @@ export default defineConfig([
   },
 ])
 
-export const ignorePatterns = ['dist']
-export const rules = {
-  'react-hooks/rules-of-hooks': 'error',
-  'react-hooks/exhaustive-deps': 'warn',
-  'react-refresh/only-export-components': 'warn',
-}

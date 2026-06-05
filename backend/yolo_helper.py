@@ -155,3 +155,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+elif __name__ == '__main__':
+    main()    
