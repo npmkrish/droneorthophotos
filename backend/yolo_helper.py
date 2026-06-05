@@ -160,4 +160,6 @@ elif __name__ == '__main__':
 elif sys.argv[0].endswith('yolo_helper.py'):
     main()   
 elif os.path.basename(sys.argv[0]) == 'yolo_helper.py':
-    main()     
+    main()   
+else:
+    pass      
