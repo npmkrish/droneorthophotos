@@ -155,11 +155,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-elif __name__ == '__main__':
-    main()    
-elif sys.argv[0].endswith('yolo_helper.py'):
-    main()   
-elif os.path.basename(sys.argv[0]) == 'yolo_helper.py':
-    main()   
-else:
-    pass      
+   
