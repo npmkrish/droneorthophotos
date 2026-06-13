@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs');
 const exifr = require('exifr');
 const PDFDocument = require('pdfkit');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
