@@ -10,8 +10,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const exifr = require('exifr');
 const PDFDocument = require('pdfkit');
-const sharp = require('sharp');
-const { createCanvas, loadImage } = require('canvas');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
