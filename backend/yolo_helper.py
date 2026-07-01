@@ -142,6 +142,7 @@ def main():
                     # Yellow text
                     cv2.putText(mask_image, label, (label_x, label_y), font, font_scale, (255, 255, 0), font_thickness)
                     cv2.putText(mask_image, label, (label_x, label_y), font, font_scale, (0, 0, 0), font_thickness + 1)
+                    cv2.putText(mask_image, label, (label_x, label_y), font, font_scale, (255, 255, 0), font_thickness)
 
             blended_image = cv2.addWeighted(image, 0.8, mask_image, 0.5, 0)
             cv2.imwrite(output_path, blended_image)
