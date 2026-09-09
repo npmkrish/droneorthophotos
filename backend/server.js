@@ -246,7 +246,6 @@ app.get('/api/predict_image', authenticateToken, async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
-    res.sendStatus(500);
   }
 });
 
