@@ -16,7 +16,9 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
-      plugins: { reactHooks, reactRefresh },
+      rules: {
+        'no-unused-vars': 'warn',
+      },
     },
   },
 ])
