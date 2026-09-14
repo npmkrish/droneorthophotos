@@ -152,6 +152,11 @@ def main():
     except Exception as e:
         print(json.dumps({"error": str(e)}))
         sys.exit(1)
+    try:
+        os.remove(image_path)
+    except Exception as e:
+        print(json.dumps({"error": f"Failed to delete uploaded file: {str(e)}"}))
+        sys.exit(1)    
 
 if __name__ == '__main__':
     main()   
