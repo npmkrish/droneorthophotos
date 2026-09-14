@@ -16,7 +16,11 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
-
+      parser: '@babel/eslint-parser',
+      plugin: {
+        'react-hooks': reactHooks,
+        'react-refresh': reactRefresh,
+      },
     },
   },
 ])
