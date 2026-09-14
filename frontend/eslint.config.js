@@ -20,6 +20,7 @@ export default defineConfig([
       plugin: {
         'react-hooks': reactHooks,
         'react-refresh': reactRefresh,
+        '@babel': require('@babel/eslint-plugin'),
       },
     },
   },
