@@ -308,6 +308,8 @@ app.get('/api/reports', authenticateToken, async (req, res) => {
       rawData: records.map(r => ({
         originalFilename: r.originalFilename,
         predictedFilename: r.predictedFilename,
+        latitude: r.latitude,
+        longitude: r.longitude,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
