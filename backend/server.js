@@ -305,6 +305,9 @@ app.get('/api/reports', authenticateToken, async (req, res) => {
       roads: totalRoads,
       trees: totalTrees,
       others: otherCounts
+      rawData: records.map(r => ({
+        originalFilename: r.originalFilename,
+        predictedFilename: r.predictedFilename,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
