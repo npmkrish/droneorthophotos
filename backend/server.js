@@ -310,6 +310,9 @@ app.get('/api/reports', authenticateToken, async (req, res) => {
         predictedFilename: r.predictedFilename,
         latitude: r.latitude,
         longitude: r.longitude,
+        objectCounts: r.objectCounts,
+        timestamp: r.timestamp
+      }))
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
