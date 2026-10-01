@@ -154,3 +154,6 @@ def main():
         sys.exit(1)
 
 
+          blended_image = cv2.addWeighted(image, 0.8, mask_image, 0.5, 0)
+            cv2.imwrite(output_path, blended_image)
+            add_geolocation(output_path, latitude, longitude)
