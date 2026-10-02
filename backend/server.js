@@ -424,3 +424,7 @@ app.get('/api/test', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
+
+app.use((req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
