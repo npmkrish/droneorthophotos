@@ -420,3 +420,7 @@ app.get('/', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working correctly' });
 });
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
