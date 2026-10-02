@@ -417,3 +417,6 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Drone Imagery Feature Analysis API');
 });       
 
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working correctly' });
+});
