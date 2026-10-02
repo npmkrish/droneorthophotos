@@ -413,16 +413,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-res.json({
-      totalUploads: records.length,
-      rooftops: totalRooftops,
-      waterbodies: totalWaterbodies,
-      roads: totalRoads,
-      trees: totalTrees,
-      others: otherCounts
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+app.get('/', (req, res) => {
+  res.send('Welcome to the Drone Imagery Feature Analysis API');
+});       
 
