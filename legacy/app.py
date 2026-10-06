@@ -518,6 +518,55 @@ def predicted_images():
 def chat_report():
     return render_template('chat.html')
 
+# @app.route('/report_nlp', methods=['POST'])
+# def generate_report_nlp():
+#     data = request.get_json()  # Get JSON data from the request
+#     if not data or 'object_counts' not in data:
+#         return jsonify({'error': 'Invalid data'}), 400
+
+#     object_counts = data['object_counts']
+#     font_path = os.path.join(app.root_path, 'static', 'fonts', 'DejaVuSans.ttf')  # Correct font path
+#     pdf = FPDF()
+#     pdf.add_page()
+#     pdf.add_font('DejaVu', '', font_path, uni=True)
+#     pdf.set_font("DejaVu", size=12)
+
+#     # Title
+#     pdf.cell(200, 10, txt="Image Analysis Report", ln=True, align='C')
+#     pdf.ln(10)
+
+#     # Detected Objects
+#     pdf.cell(0, 10, txt="Objects Detected:", ln=True)
+#     for label, count in object_counts.items():
+#         pdf.cell(0, 10, txt=f"    • {label}: {count} detected", ln=True)
+#     pdf.ln(10)
+
+#     # Findings
+#     pdf.cell(0, 10, txt="Findings:", ln=True)
+#     findings_text = (
+#         "Upon analyzing the provided image, the following objects were detected: " +
+#         ", ".join(object_counts.keys()) + ". Each object was classified based on its "
+#         "visual characteristics. This analysis provides insight into the distribution "
+#         "of objects within the image."
+#     )
+#     pdf.multi_cell(0, 10, txt=findings_text)
+#     pdf.ln(10)
+
+#     # Conclusion
+#     pdf.cell(0, 10, txt="Conclusion:", ln=True)
+#     conclusion_text = (
+#         "The report provides detailed insights into the objects detected in the image. "
+#         "The analysis can be applied to areas such as surveillance, automated systems, and "
+#         "environmental monitoring. Further investigation into the spatial distribution "
+#         "and relationships among objects could enhance understanding and decision-making."
+#     )
+#     pdf.multi_cell(0, 10, txt=conclusion_text)
+
+#     report_path = os.path.join(app.config['REPORT_FOLDER'], 'report.pdf')
+#     pdf.output(report_path)
+
+#     return send_file(report_path, as_attachment=True)
+
 
 
 @app.route('/report_nlp', methods=['POST'])
