@@ -441,3 +441,11 @@ app.on('SIGINT', () => {
     process.exit(0);
   });
 });
+
+app.on('SIGTERM', () => {
+  console.log('Gracefully shutting down...');
+  mongoose.connection.close(false, () => {
+    console.log('MongoDB connection closed');
+    process.exit(0);
+  });
+});
