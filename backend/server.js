@@ -429,23 +429,3 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
-  res.status(500).json({ error: 'Internal server error' });
-});
-
-app.on('SIGINT', () => {
-  console.log('Gracefully shutting down...');
-  mongoose.connection.close(false, () => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
-});
-
-app.on('SIGTERM', () => {
-  console.log('Gracefully shutting down...');
-  mongoose.connection.close(false, () => {
-    console.log('MongoDB connection closed');
-    process.exit(0);
-  });
-});
