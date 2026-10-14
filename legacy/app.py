@@ -729,7 +729,15 @@ def not_found(e):
         print(user_name)
         return render_template('404.html', user_name=user_name)
     # return render_template('404.html'), 404
-    return redirect(url_for('404.html',user_name="irowhskkgjs"))          
+    return redirect(url_for('404.html',user_name="irowhskkgjs"))      
+
+def found(e):
+    if 'email' in session:
+        user_name = session['name']
+        print(user_name)
+        return render_template('302.html', user_name=user_name)
+    # return render_template('302.html'), 302
+    return redirect(url_for('302.html',user_name="irowhskkgjs"))
 
 
 
