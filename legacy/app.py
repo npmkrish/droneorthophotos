@@ -568,7 +568,6 @@ def chat_report():
 #     return send_file(report_path, as_attachment=True)
 
 
-
 @app.route('/report_nlp', methods=['POST'])
 def generate_report_nlp():
     # Extract and validate JSON data
@@ -722,7 +721,15 @@ def not_found(e):
     return redirect(url_for('404.html',user_name="irowhskkgjs"))
 def method_not_allowed(e):
     render_template('405.html'), 405
-    render_template('406.html'), 406        
+    render_template('406.html'), 406  
+
+def not_found(e):
+    if 'email' in session:
+        user_name = session['name']
+        print(user_name)
+        return render_template('404.html', user_name=user_name)
+    # return render_template('404.html'), 404
+    return redirect(url_for('404.html',user_name="irowhskkgjs"))          
 
 
 
